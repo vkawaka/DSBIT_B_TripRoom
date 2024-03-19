@@ -3,6 +3,7 @@ package br.senai.sp.jandira.mytrip
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,14 +17,23 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.BeachAccess
+import androidx.compose.material.icons.filled.DownhillSkiing
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Forest
+import androidx.compose.material.icons.filled.Landscape
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -31,16 +41,22 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -60,6 +76,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     Login()
                     SignUp()
+                    HomePage()
                 }
             }
         }
@@ -390,5 +407,153 @@ fun SignUp(){
 fun SignUpPreview() {
     MyTripTheme {
         SignUp()
+    }
+}
+
+@Composable
+fun HomePage(){
+    Column {
+        Box(modifier = Modifier
+            .fillMaxWidth()
+            .height(197.dp)
+        ){
+            Image(
+                painter = painterResource(id = R.drawable.paris),
+                contentDescription = "Cidade de Paris",
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+            Column (
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 19.dp, vertical = 13.dp),
+                horizontalAlignment = Alignment.End
+            ){
+                Card (
+                    shape = CircleShape,
+                    border = BorderStroke(width = 2.dp, Color(0xffffffff)),
+                    modifier = Modifier.size(52.dp)
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.taehyun_app),
+                        contentDescription = "Imagem do Usuário",
+                    )
+                }
+                Text(
+                    text = "Kang Taehyun",
+                    color = Color(0xffffffff),
+                    fontSize = 10.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+            Column (
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(19.dp),
+                verticalArrangement = Arrangement.Bottom
+            ){
+                Row (
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    Icon(imageVector = Icons.Default.LocationOn, contentDescription = "Icon de localização", tint = Color.White, modifier = Modifier.size(16.dp))
+                    Text(text = "You're in Paris",
+                        fontSize = 14.sp,
+                        color = Color.White
+                    )
+                }
+                Text(text = "My Trips",
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 30.sp
+                )
+            }
+        }
+        Text(text = "Categorias")
+        LazyRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 19.dp)
+        ){
+            item{ Card (
+                modifier = Modifier
+                    .size(width = 130.dp, height = 60.dp)
+                    .padding(horizontal = 9.dp),
+                colors = CardDefaults.cardColors(Color(0xFFCF06F0))
+            ) {
+                Column (
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ){
+                    Icon(imageVector = Icons.Default.Landscape, contentDescription = "", tint = Color.White, modifier = Modifier.size(32.dp))
+                    Text(text = "Montain", color = Color.White)
+                }
+            }}
+            item{ Card (
+                modifier = Modifier
+                    .size(width = 130.dp, height = 60.dp)
+                    .padding(horizontal = 9.dp),
+                colors = CardDefaults.cardColors(Color(0xFFEAABF4))
+            ) {
+                Column (
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ){
+                    Icon(imageVector = Icons.Default.DownhillSkiing, contentDescription = "", tint = Color.White, modifier = Modifier.size(32.dp))
+                    Text(text = "Snow", color = Color.White)
+                }
+            }}
+            item{ Card (
+                modifier = Modifier
+                    .size(width = 130.dp, height = 60.dp)
+                    .padding(horizontal = 9.dp),
+                colors = CardDefaults.cardColors(Color(0xFFEAABF4))
+            ) {
+                Column (
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ){
+                    Icon(imageVector = Icons.Default.BeachAccess, contentDescription = "", tint = Color.White, modifier = Modifier.size(32.dp))
+                    Text(text = "Beach", color = Color.White)
+                }
+            }}
+        }
+        TextField(value = "", onValueChange = {},
+            modifier = Modifier
+                .padding(horizontal = 19.dp, vertical = 13.dp)
+                .fillMaxWidth(),
+            colors = TextFieldDefaults.colors(
+                unfocusedContainerColor = Color.White
+            ),
+            shape = RoundedCornerShape(20.dp),
+            placeholder ={
+               Text(text = "Search your destiny")
+            },
+            trailingIcon = {
+                Icon(imageVector = Icons.Default.Search, contentDescription = "")
+            }
+        )
+        Text(text = "Past Trips")
+        LazyColumn{
+            item{
+                Card {
+                    Column {
+                        Card {
+                            Image(painter = painterResource(id = R.drawable.london), contentDescription = "London")
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun HomePagePreview() {
+    MyTripTheme {
+        HomePage()
     }
 }
