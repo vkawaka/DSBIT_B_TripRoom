@@ -585,7 +585,7 @@ fun HomePage(){
                             modifier = Modifier.fillMaxWidth(),
                             colors = CardDefaults.cardColors(Color.White)
                         ) {
-                            Image(painter = painterResource(id = R.drawable.london), contentDescription = "London", modifier = Modifier
+                            Image(painter = painterResource(id = R.drawable.porto), contentDescription = "London", modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(6.dp), contentScale = ContentScale.Crop)
                         }
