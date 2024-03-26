@@ -589,8 +589,8 @@ fun HomePage(){
                                 .fillMaxWidth()
                                 .padding(6.dp), contentScale = ContentScale.Crop)
                         }
-                        Text(text = "London, 2019", fontSize = 16.sp, color = Color(0xFFCF06F0))
-                        Text(text = "London is the capital and the largest city of the United Kingdom, with a population of just under 9 million", fontSize = 11.sp, color = Color.LightGray, lineHeight = 12.sp, modifier = Modifier.padding(vertical = 10.dp))
+                        Text(text = "Porto, 2022", fontSize = 16.sp, color = Color(0xFFCF06F0))
+                        Text(text = "Porto is the second city in Portugal, the capital of the Oporto District, and one of the Iberian Peninsula's major urban areas.", fontSize = 11.sp, color = Color.LightGray, lineHeight = 12.sp, modifier = Modifier.padding(vertical = 10.dp))
                         Column (
                             modifier = Modifier
                                 .fillMaxWidth()
