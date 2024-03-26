@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.mytrip
 
+import android.inputmethodservice.Keyboard.Key
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -21,6 +22,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.BeachAccess
@@ -50,6 +52,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -59,6 +63,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -74,8 +81,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Login()
-                    SignUp()
                     HomePage()
                 }
             }
@@ -85,6 +90,12 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Login() {
+    var emailState = remember {
+        mutableStateOf("")
+    }
+    var senhaState = remember {
+        mutableStateOf("")
+    }
     Column {
         Row(
             horizontalArrangement = Arrangement.End,
@@ -119,8 +130,10 @@ fun Login() {
             }
             Spacer(modifier = Modifier.height(100.dp))
             OutlinedTextField(
-                value = "teste@email.com",
-                onValueChange = {},
+                value = emailState.value,
+                onValueChange = {
+                   emailState.value = it
+                },
                 modifier = Modifier.fillMaxWidth(),
                 label = {
                     Text(text = "E-mail")
@@ -132,12 +145,15 @@ fun Login() {
                 leadingIcon = {
                     Icon(imageVector = Icons.Filled.Email, contentDescription = "", tint = Color(0xFFCF06F0))
                 },
-                shape = RoundedCornerShape(20.dp)
+                shape = RoundedCornerShape(20.dp),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
             )
             Spacer(modifier = Modifier.height(16.dp))
             OutlinedTextField(
-                value = "*********",
-                onValueChange = {},
+                value = senhaState.value,
+                onValueChange = {
+                                senhaState.value = it
+                },
                 modifier = Modifier.fillMaxWidth(),
                 label = {
                     Text(text = "Password")
@@ -149,7 +165,9 @@ fun Login() {
                 leadingIcon = {
                     Icon(imageVector = Icons.Filled.Lock, contentDescription = "", tint = Color(0xFFCF06F0))
                 },
-                shape = RoundedCornerShape(20.dp)
+                shape = RoundedCornerShape(20.dp),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, capitalization = KeyboardCapitalization.None),
+                visualTransformation = PasswordVisualTransformation()
             )
         }
         Column (
@@ -211,6 +229,21 @@ fun GreetingPreview() {
 
 @Composable
 fun SignUp(){
+    var usernameState = remember {
+        mutableStateOf("")
+    }
+    var telephoneStatus = remember {
+        mutableStateOf("")
+    }
+    var emailState = remember {
+        mutableStateOf("")
+    }
+    var senhaState = remember {
+        mutableStateOf("")
+    }
+    var menorCheckState = remember {
+        mutableStateOf(false)
+    }
     Column {
         Row(
             horizontalArrangement = Arrangement.End,
@@ -261,8 +294,10 @@ fun SignUp(){
 
             Spacer(modifier = Modifier.height(20.dp))
             OutlinedTextField(
-                value = "Susanna Hoffs",
-                onValueChange = {},
+                value = usernameState.value,
+                onValueChange = {
+                                usernameState.value = it
+                },
                 modifier = Modifier.fillMaxWidth(),
                 label = {
                     Text(text = "Username")
@@ -278,12 +313,15 @@ fun SignUp(){
                         tint = Color(0xFFCF06F0)
                     )
                 },
-                shape = RoundedCornerShape(20.dp)
+                shape = RoundedCornerShape(20.dp),
+                keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words)
             )
             Spacer(modifier = Modifier.height(10.dp))
             OutlinedTextField(
-                value = "99999-0987",
-                onValueChange = {},
+                value = telephoneStatus.value,
+                onValueChange = {
+                                telephoneStatus.value = it
+                },
                 modifier = Modifier.fillMaxWidth(),
                 label = {
                     Text(text = "Phone")
@@ -299,12 +337,15 @@ fun SignUp(){
                         tint = Color(0xFFCF06F0)
                     )
                 },
-                shape = RoundedCornerShape(20.dp)
+                shape = RoundedCornerShape(20.dp),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
             )
             Spacer(modifier = Modifier.height(10.dp))
             OutlinedTextField(
-                value = "susanna@email.com",
-                onValueChange = {},
+                value = emailState.value,
+                onValueChange = {
+                                emailState.value = it
+                },
                 modifier = Modifier.fillMaxWidth(),
                 label = {
                     Text(text = "E-mail")
@@ -320,12 +361,15 @@ fun SignUp(){
                         tint = Color(0xFFCF06F0)
                     )
                 },
-                shape = RoundedCornerShape(20.dp)
+                shape = RoundedCornerShape(20.dp),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
             )
             Spacer(modifier = Modifier.height(10.dp))
             OutlinedTextField(
-                value = "*********",
-                onValueChange = {},
+                value = senhaState.value,
+                onValueChange = {
+                                senhaState.value = it
+                },
                 modifier = Modifier.fillMaxWidth(),
                 label = {
                     Text(text = "Password")
@@ -341,15 +385,19 @@ fun SignUp(){
                         tint = Color(0xFFCF06F0)
                     )
                 },
-                shape = RoundedCornerShape(20.dp)
+                shape = RoundedCornerShape(20.dp),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, capitalization = KeyboardCapitalization.None),
+                visualTransformation = PasswordVisualTransformation()
             )
             Spacer(modifier = Modifier.height(10.dp))
             Row (
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Checkbox(checked = false,
-                    onCheckedChange = {},
-                    colors = CheckboxDefaults.colors(uncheckedColor = Color(0xFFCF06F0)),
+                Checkbox(checked = menorCheckState.value,
+                    onCheckedChange = {
+                                      menorCheckState.value = it
+                    },
+                    colors = CheckboxDefaults.colors(uncheckedColor = Color(0xFFCF06F0), checkedColor = Color(0xFFCF06F0)),
                     modifier = Modifier.scale(1.5f)
                 )
                 Text(text = "Over 18?")
@@ -412,6 +460,9 @@ fun SignUpPreview() {
 
 @Composable
 fun HomePage(){
+    var buscarState = remember {
+        mutableStateOf("")
+    }
     Column {
         Box(modifier = Modifier
             .fillMaxWidth()
@@ -521,7 +572,10 @@ fun HomePage(){
                 }
             }}
         }
-        OutlinedTextField(value = "", onValueChange = {},
+        OutlinedTextField(value = buscarState.value,
+            onValueChange = {
+                buscarState.value = it
+        },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 13.dp)
