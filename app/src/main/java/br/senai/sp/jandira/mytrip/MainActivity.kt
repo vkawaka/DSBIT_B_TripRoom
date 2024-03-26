@@ -469,7 +469,7 @@ fun HomePage(){
                 )
             }
         }
-        Text(text = "Categorias")
+        Text(text = "Categories", fontSize = 14.sp, color = Color.Gray, modifier = Modifier.padding(horizontal = 13.dp, vertical = 10.dp))
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
@@ -521,28 +521,83 @@ fun HomePage(){
                 }
             }}
         }
-        TextField(value = "", onValueChange = {},
+        OutlinedTextField(value = "", onValueChange = {},
             modifier = Modifier
-                .padding(horizontal = 19.dp, vertical = 13.dp)
-                .fillMaxWidth(),
-            colors = TextFieldDefaults.colors(
+                .fillMaxWidth()
+                .padding(horizontal = 13.dp)
+                .padding(vertical = 10.dp),
+            shape = RoundedCornerShape(30.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color.White,
+                unfocusedBorderColor = Color.White,
+                focusedContainerColor = Color.White,
                 unfocusedContainerColor = Color.White
             ),
-            shape = RoundedCornerShape(20.dp),
-            placeholder ={
-               Text(text = "Search your destiny")
+            placeholder = {
+                Text(text = "Search your destiny", color = Color.LightGray)
             },
             trailingIcon = {
-                Icon(imageVector = Icons.Default.Search, contentDescription = "")
+                Icon(imageVector = Icons.Default.Search, contentDescription = "Search", tint = Color.LightGray)
             }
         )
-        Text(text = "Past Trips")
+        Text(text = "Past Trips", fontSize = 14.sp, color = Color.Gray, modifier = Modifier.padding(horizontal = 13.dp))
         LazyColumn{
             item{
-                Card {
-                    Column {
-                        Card {
-                            Image(painter = painterResource(id = R.drawable.london), contentDescription = "London")
+                Card (
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(13.dp), colors = CardDefaults.cardColors(Color.White)
+                ) {
+                    Column (
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Card (
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(Color.White)
+                        ) {
+                            Image(painter = painterResource(id = R.drawable.london), contentDescription = "London", modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(6.dp), contentScale = ContentScale.Crop)
+                        }
+                        Text(text = "London, 2019", fontSize = 16.sp, color = Color(0xFFCF06F0))
+                        Text(text = "London is the capital and the largest city of the United Kingdom, with a population of just under 9 million", fontSize = 11.sp, color = Color.LightGray, lineHeight = 12.sp)
+                        Column (
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp),
+                            horizontalAlignment = Alignment.End
+                        ) {
+                            Text(text = "18 Feb - 21 Feb", fontSize = 11.sp, color = Color(0xFFCF06F0))
+                        }
+                    }
+                }
+            }
+            item{
+                Card (
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(13.dp), colors = CardDefaults.cardColors(Color.White)
+                ) {
+                    Column (
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Card (
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(Color.White)
+                        ) {
+                            Image(painter = painterResource(id = R.drawable.london), contentDescription = "London", modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(6.dp), contentScale = ContentScale.Crop)
+                        }
+                        Text(text = "London, 2019", fontSize = 16.sp, color = Color(0xFFCF06F0))
+                        Text(text = "London is the capital and the largest city of the United Kingdom, with a population of just under 9 million", fontSize = 11.sp, color = Color.LightGray, lineHeight = 12.sp, modifier = Modifier.padding(vertical = 10.dp))
+                        Column (
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp),
+                            horizontalAlignment = Alignment.End
+                        ) {
+                            Text(text = "18 Feb - 21 Feb", fontSize = 11.sp, color = Color(0xFFCF06F0))
                         }
                     }
                 }
