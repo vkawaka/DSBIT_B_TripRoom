@@ -546,7 +546,8 @@ fun HomePage(){
                 Card (
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(13.dp), colors = CardDefaults.cardColors(Color.White)
+                        .padding(13.dp), colors = CardDefaults.cardColors(Color.White),
+                    elevation = CardDefaults.elevatedCardElevation(defaultElevation = 16.dp)
                 ) {
                     Column (
                         modifier = Modifier.fillMaxWidth()
@@ -576,7 +577,8 @@ fun HomePage(){
                 Card (
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(13.dp), colors = CardDefaults.cardColors(Color.White)
+                        .padding(13.dp), colors = CardDefaults.cardColors(Color.White),
+                    elevation = CardDefaults.elevatedCardElevation(defaultElevation = 16.dp)
                 ) {
                     Column (
                         modifier = Modifier.fillMaxWidth()
