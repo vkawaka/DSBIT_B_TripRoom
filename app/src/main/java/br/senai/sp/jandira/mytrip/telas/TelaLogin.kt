@@ -44,7 +44,7 @@ import androidx.navigation.NavHostController
 import br.senai.sp.jandira.mytrip.ui.theme.MyTripTheme
 
 @Composable
-fun Login(controleDeNavegacao: NavHostController) {
+fun Login(controleDeNavegacao: NavHostController?) {
     var emailState = remember {
         mutableStateOf("")
     }
@@ -137,7 +137,7 @@ fun Login(controleDeNavegacao: NavHostController) {
                     horizontalAlignment = Alignment.End
 
                 ){
-                    Button(onClick = { controleDeNavegacao.navigate("home")},
+                    Button(onClick = { controleDeNavegacao!!.navigate("home")},
                         colors = ButtonDefaults.buttonColors(Color(0xFFCF06F0)),
                         modifier = Modifier.size(height = 60.dp, width = 160.dp),
                         shape = RoundedCornerShape(24.dp)
@@ -154,7 +154,7 @@ fun Login(controleDeNavegacao: NavHostController) {
                     Row {
                         Text(text = "Don't have an account?")
                         Spacer(modifier = Modifier.width(20.dp))
-                        Text(text = "Sign up", color = Color(0xFFCF06F0), fontWeight = FontWeight.Bold, modifier = Modifier.clickable { controleDeNavegacao.navigate("cadastro") })
+                        Text(text = "Sign up", color = Color(0xFFCF06F0), fontWeight = FontWeight.Bold, modifier = Modifier.clickable { controleDeNavegacao!!.navigate("cadastro") })
                     }
                 }
                 Row(
@@ -184,6 +184,6 @@ fun Login(controleDeNavegacao: NavHostController) {
 @Composable
 fun GreetingPreview() {
     MyTripTheme {
-        //Login(controleDeNavegacao)
+        Login(null)
     }
 }

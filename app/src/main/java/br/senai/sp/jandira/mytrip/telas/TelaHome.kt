@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -43,13 +44,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import br.senai.sp.jandira.mytrip.R
+import br.senai.sp.jandira.mytrip.repository.CategoriaRepository
+import br.senai.sp.jandira.mytrip.repository.ViagemRepository
 import br.senai.sp.jandira.mytrip.ui.theme.MyTripTheme
+import br.senai.sp.jandira.mytrip.ui.theme.reduzirData
 
 @Composable
 fun HomePage(controleDeNavegacao: NavHostController) {
     var buscarState = remember {
         mutableStateOf("")
     }
+    val categoria = CategoriaRepository().listarTodasAsCategorias()
+    val viagens = ViagemRepository().listarTodasAsViagens()
     MyTripTheme {
         Surface (
             modifier = Modifier.fillMaxSize()
@@ -117,53 +123,22 @@ fun HomePage(controleDeNavegacao: NavHostController) {
                         .fillMaxWidth()
                         .padding(horizontal = 19.dp)
                 ){
-                    item{ Card (
-                        modifier = Modifier
-                            .size(width = 130.dp, height = 60.dp)
-                            .padding(horizontal = 9.dp),
-                        colors = CardDefaults.cardColors(Color(0xFFCF06F0))
-                    ) {
-                        Column (
-                            modifier = Modifier.fillMaxSize(),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ){
-                            Icon(imageVector = Icons.Default.Landscape, contentDescription = "", tint = Color.White, modifier = Modifier.size(32.dp))
-                            Text(text = "Mountain", color = Color.White)
+                    items(categoria){
+                        Card(
+                            modifier = Modifier
+                                .size(width = 130.dp, height = 60.dp)
+                                .padding(horizontal = 9.dp),
+                            colors = CardDefaults.cardColors(Color(0xFFCF06F0))
+                        ) {
+                            Column (
+                                modifier = Modifier.fillMaxSize(),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ){
+                               Image(painter = it.image!!, contentDescription = "")
+                                Text(text = it.nome, color = Color.White)
+                            }
                         }
-                    }
-                    }
-                    item{ Card (
-                        modifier = Modifier
-                            .size(width = 130.dp, height = 60.dp)
-                            .padding(horizontal = 9.dp),
-                        colors = CardDefaults.cardColors(Color(0xFFEAABF4))
-                    ) {
-                        Column (
-                            modifier = Modifier.fillMaxSize(),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ){
-                            Icon(imageVector = Icons.Default.DownhillSkiing, contentDescription = "", tint = Color.White, modifier = Modifier.size(32.dp))
-                            Text(text = "Snow", color = Color.White)
-                        }
-                    }
-                    }
-                    item{ Card (
-                        modifier = Modifier
-                            .size(width = 130.dp, height = 60.dp)
-                            .padding(horizontal = 9.dp),
-                        colors = CardDefaults.cardColors(Color(0xFFEAABF4))
-                    ) {
-                        Column (
-                            modifier = Modifier.fillMaxSize(),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ){
-                            Icon(imageVector = Icons.Default.BeachAccess, contentDescription = "", tint = Color.White, modifier = Modifier.size(32.dp))
-                            Text(text = "Beach", color = Color.White)
-                        }
-                    }
                     }
                 }
                 OutlinedTextField(value = buscarState.value,
@@ -190,7 +165,7 @@ fun HomePage(controleDeNavegacao: NavHostController) {
                 )
                 Text(text = "Past Trips", fontSize = 14.sp, color = Color.Gray, modifier = Modifier.padding(horizontal = 13.dp))
                 LazyColumn{
-                    item{
+                    items(viagens){
                         Card (
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -204,50 +179,19 @@ fun HomePage(controleDeNavegacao: NavHostController) {
                                     modifier = Modifier.fillMaxWidth(),
                                     colors = CardDefaults.cardColors(Color.White)
                                 ) {
-                                    Image(painter = painterResource(id = R.drawable.london), contentDescription = "London", modifier = Modifier
+                                    Image(painter = if(it.image == null) painterResource(id = R.drawable.default_image) else it.image!!, contentDescription = "London", modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(6.dp), contentScale = ContentScale.Crop)
                                 }
-                                Text(text = "London, 2019", fontSize = 16.sp, color = Color(0xFFCF06F0))
-                                Text(text = "London is the capital and the largest city of the United Kingdom, with a population of just under 9 million", fontSize = 11.sp, color = Color.LightGray, lineHeight = 12.sp)
+                                Text(text = "${it.destino}, ${it.dataChegada.year}", fontSize = 16.sp, color = Color(0xFFCF06F0))
+                                Text(text = it.descricao, fontSize = 11.sp, color = Color.LightGray, lineHeight = 12.sp)
                                 Column (
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(8.dp),
                                     horizontalAlignment = Alignment.End
                                 ) {
-                                    Text(text = "18 Feb - 21 Feb", fontSize = 11.sp, color = Color(0xFFCF06F0))
-                                }
-                            }
-                        }
-                    }
-                    item{
-                        Card (
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(13.dp), colors = CardDefaults.cardColors(Color.White),
-                            elevation = CardDefaults.elevatedCardElevation(defaultElevation = 16.dp)
-                        ) {
-                            Column (
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                Card (
-                                    modifier = Modifier.fillMaxWidth(),
-                                    colors = CardDefaults.cardColors(Color.White)
-                                ) {
-                                    Image(painter = painterResource(id = R.drawable.porto), contentDescription = "London", modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(6.dp), contentScale = ContentScale.Crop)
-                                }
-                                Text(text = "Porto, 2022", fontSize = 16.sp, color = Color(0xFFCF06F0))
-                                Text(text = "Porto is the second city in Portugal, the capital of the Oporto District, and one of the Iberian Peninsula's major urban areas.", fontSize = 11.sp, color = Color.LightGray, lineHeight = 12.sp, modifier = Modifier.padding(vertical = 10.dp))
-                                Column (
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(8.dp),
-                                    horizontalAlignment = Alignment.End
-                                ) {
-                                    Text(text = "18 Feb - 21 Feb", fontSize = 11.sp, color = Color(0xFFCF06F0))
+                                    Text(text = "${reduzirData(it.dataChegada)} - ${reduzirData(it.dataPartida)}", fontSize = 11.sp, color = Color(0xFFCF06F0))
                                 }
                             }
                         }
