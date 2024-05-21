@@ -135,7 +135,7 @@ fun HomePage(controleDeNavegacao: NavHostController) {
                                 verticalArrangement = Arrangement.Center,
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ){
-                               Image(painter = it.image!!, contentDescription = "")
+                               Image(painter = it.image!!, contentDescription = "", modifier = Modifier.size(width = 30.dp, height = 40.dp))
                                 Text(text = it.nome, color = Color.White)
                             }
                         }
@@ -210,6 +210,6 @@ fun HomePage(controleDeNavegacao: NavHostController) {
 @Composable
 fun HomePagePreview() {
     MyTripTheme {
-        //HomePage(controleDeNavegacao)
+        //HomePage()
     }
 }
