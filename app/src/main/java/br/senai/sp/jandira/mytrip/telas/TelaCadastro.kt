@@ -38,6 +38,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -48,6 +49,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import br.senai.sp.jandira.mytrip.R
+import br.senai.sp.jandira.mytrip.model.Usuarios
+import br.senai.sp.jandira.mytrip.repository.UsuarioRepository
 import br.senai.sp.jandira.mytrip.ui.theme.MyTripTheme
 
 @Composable
@@ -67,6 +70,7 @@ fun SignUp(controleDeNavegacao: NavHostController) {
     var menorCheckState = remember {
         mutableStateOf(false)
     }
+    var usuarioRepository = UsuarioRepository(LocalContext.current)
     MyTripTheme {
         Surface (
             modifier = Modifier.fillMaxSize()
@@ -237,24 +241,31 @@ fun SignUp(controleDeNavegacao: NavHostController) {
                         .padding(horizontal = 20.dp),
                     horizontalAlignment = Alignment.End
                 ) {
-                    Button(onClick = { controleDeNavegacao.navigate("login") },
-                        colors = ButtonDefaults.buttonColors(Color(0xFFCF06F0)),
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(24.dp)
+                    Button(onClick = {
+                        val novoUsuario = Usuarios(
+                            nome = usernameState.value,
+                            telefone = telephoneStatus.value,
+                            email = emailState.value,
+                            senha = senhaState.value
+                        )
+                        usuarioRepository.salvar(novoUsuario)
+
+                        controleDeNavegacao.navigate("login") },
+                        modifier = Modifier
+                            .width(340.dp)
+                            .height(50.dp)
+                            .offset(x = 20.dp, y = -20.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFCA22CF))
                     ) {
-                        Row(
-                            horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically
-                        ){
-                            Text(text = "CREATE ACCOUNT", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                        }
+                        Text(text = "CREATE ACCOUNT ",
+                            fontWeight = FontWeight.ExtraBold
+                        )
                     }
-                    Spacer(modifier = Modifier.height(20.dp))
-                    Row {
-                        Text(text = "Already have an account?")
-                        Spacer(modifier = Modifier.width(20.dp))
-                        Text(text = "Sign in", color = Color(0xFFCF06F0), fontWeight = FontWeight.Bold, modifier = Modifier.clickable { controleDeNavegacao.navigate("login") })
-                    }
+
+                    Text(text = "Already have an account?",
+                        modifier = Modifier.offset(x = 110.dp, y = -15.dp),
+                        color = (Color(0xFF757272))
+                    )
                 }
                 Row(
                     horizontalArrangement = Arrangement.Start,

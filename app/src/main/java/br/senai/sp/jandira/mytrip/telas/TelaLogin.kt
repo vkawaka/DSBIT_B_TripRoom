@@ -33,6 +33,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -41,6 +42,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import br.senai.sp.jandira.mytrip.repository.UsuarioRepository
 import br.senai.sp.jandira.mytrip.ui.theme.MyTripTheme
 
 @Composable
@@ -51,6 +53,15 @@ fun Login(controleDeNavegacao: NavHostController?) {
     var senhaState = remember {
         mutableStateOf("")
     }
+    var erroState = remember {
+        mutableStateOf(false)
+    }
+
+    var mensagemErroState = remember {
+        mutableStateOf("")
+    }
+    var usuarioRepository = UsuarioRepository(LocalContext.current)
+
     MyTripTheme {
         Surface(
             modifier = Modifier.fillMaxSize()
@@ -88,6 +99,10 @@ fun Login(controleDeNavegacao: NavHostController?) {
                         Text(text = "Please sing in to continue", fontWeight = FontWeight.ExtraLight)
                     }
                     Spacer(modifier = Modifier.height(100.dp))
+                    Text(text = mensagemErroState.value,
+                        color = Color.Red,
+                        modifier = Modifier.padding(start = 4.dp)
+                    )
                     OutlinedTextField(
                         value = emailState.value,
                         onValueChange = {
@@ -137,11 +152,22 @@ fun Login(controleDeNavegacao: NavHostController?) {
                     horizontalAlignment = Alignment.End
 
                 ){
-                    Button(onClick = { controleDeNavegacao!!.navigate("home")},
-                        colors = ButtonDefaults.buttonColors(Color(0xFFCF06F0)),
-                        modifier = Modifier.size(height = 60.dp, width = 160.dp),
-                        shape = RoundedCornerShape(24.dp)
-                    ) {
+                    Button(onClick = {
+                        val email = emailState.value
+                        val senha = senhaState.value
+                        if (usuarioRepository.verificarCredenciais(email,senha)){
+                            controleDeNavegacao!!.navigate("home")
+                        }else{
+                            erroState.value=true
+                            mensagemErroState.value="Incorrect e-mail address or password!"
+                        }
+                    },
+                        modifier = Modifier
+                            .width(150.dp)
+                            .height(50.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFC51BCA)),
+
+                        ) {
                         Row(
                             horizontalArrangement = Arrangement.Center,
                             verticalAlignment = Alignment.CenterVertically

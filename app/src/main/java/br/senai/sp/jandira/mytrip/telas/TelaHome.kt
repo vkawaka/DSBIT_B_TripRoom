@@ -17,9 +17,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.BeachAccess
-import androidx.compose.material.icons.filled.DownhillSkiing
-import androidx.compose.material.icons.filled.Landscape
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
@@ -48,6 +45,8 @@ import br.senai.sp.jandira.mytrip.repository.CategoriaRepository
 import br.senai.sp.jandira.mytrip.repository.ViagemRepository
 import br.senai.sp.jandira.mytrip.ui.theme.MyTripTheme
 import br.senai.sp.jandira.mytrip.ui.theme.reduzirData
+
+//import br.senai.sp.jandira.mytrip.ui.theme.reduzirData
 
 @Composable
 fun HomePage(controleDeNavegacao: NavHostController) {
@@ -206,6 +205,9 @@ fun HomePage(controleDeNavegacao: NavHostController) {
         }
     }
 }
+
+
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun HomePagePreview() {
